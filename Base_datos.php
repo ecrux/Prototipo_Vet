@@ -65,10 +65,12 @@
 			$sql="SELECT * FROM $tabla";
 			$resultado= ($this->conexion) -> query($sql);
 			if (mysqli_num_rows($resultado)>0) {
-				$salida.="<SELECT id='select' name='sintomas[] ' MULTIPLE='multiple' size='6' onclick='al_dar_clic_en_listaa()'>";
+				$salida.="<SELECT id='select' name='sintomas[] ' MULTIPLE='multiple' size='25' onclick='al_dar_clic_en_listaa()' class='form-control'>";
+					$i=0;
 					while ($fila=mysqli_fetch_array($resultado)) 
 					{
-						$salida.="<OPTION VALUE='$fila[0]'>".$fila[1] ."</OPTION>";
+						$i++;
+						$salida.="<OPTION VALUE='$fila[0]'>".$i . " - " . $fila[1] ."</OPTION>";
 					}
 				$salida.="</SELECT>";
 				//echo $sql;
@@ -78,67 +80,53 @@
 			return $salida;
 		}
 
-		function calcular_enfermedad($sintomas,$sintoma)
+		function calcular_enfermedad($sintoma)
 		{
 			$salida="";
-			$sintoma=$_POST['sintoma'];
-			//echo $sintoma;
-			$sintomas=$_POST["sintomas"]; 
-		 	$dato="";
-			$sql="";//Sql para los dastos 
-			$cantidad=0; //Sql para traer el conteo
-				$sql.="SELECT * , $sintoma";
-				$sql.=" FROM tb_relacion t1, tb_enfermedades t2, tb_sintomas t3 where  t1.id_sintoma = t3.id_sintoma AND";
-				$sql.=" t2.id_enfermedad = t1.id_enfermedad AND";
-				$sql.= " t1.id_sintoma in (";
-				for ($i=0;$i<count($sintomas);$i++)    
-				{     
-					$dato= $sintomas[$i];    
-					$sql.= " '$dato' ";
-					if ($i<(count($sintomas)-1))$sql.= ",";
-					//if ($i < (count($sintomas)-1) ) $sql.=" UNION ";		
-				/*****************************************************************************/    
-					//if ($i < (count($sintomas)-1) ) $sql.=" UNION ";		
-				}
-				$sql.=")";
+			$sql="";
+			$sql.=  "SELECT url, enfermedad , COUNT(t1.id_enfermedad) as conteo_sintomas , ";
+		    $sql.= " (SELECT COUNT(t4.id_enfermedad) conteo_total ";
+		    $sql.= " FROM tb_relacion t4 ";
+		    $sql.= "  where t1.id_enfermedad = t4.id_enfermedad ";
+		    $sql.= " GROUP BY id_enfermedad) as conteo_total  ";
+		    $sql.= " FROM tb_relacion t1, tb_enfermedades t2 ";
+		    $sql.= " WHERE t1.id_enfermedad = t2.id_enfermedad AND id_sintoma in (".$sintoma.") ";
+		    $sql.= " GROUP BY t1.id_enfermedad";
+			//echo $sql . "<br> <br>";
+			//=$sintoma;
+			echo "Sintomas seleccionados : " . $sintoma. "<br><br>";
 			include 'config.php';
-			echo $sql;
-			$conteo="";
 			$resultado= ($this->conexion) -> query($sql);
-			//$result= ($this->conexion) -> query($sql2);
+			//$row= mysqli_num_rows($resultado);
+			//echo $row;
+			//$resultado= $this->conexion -> query($sql);
+			//echo $resultado;
+			/*$row =mysqli_num_rows($resultado);
+			echo $row;*/
+			$conteo="";
 				if (mysqli_num_rows($resultado)>0) {
-					//$fila=mysqli_fetch_array($resultado);
-						/*while ($num = mysqli_fetch_assoc($resultado)) {
-							$salida.=$num['conteo'];
-						}*/
-						$salida.="<br>";
 						while ($fila=mysqli_fetch_assoc($resultado))
 						{
-							//$salida.= $fila['conteo'];
-							//$salida.= "id_sintoma ".$fila['id_sintoma']. " ". " - ";
-							$salida.="Cantidad_sintomas -> " .$fila['conteo_total']. " ". " - ";
-							$salida.="Conteo ->".$fila['conteo']. " ". " - ";
-							$salida.= "Total de la enfermedad =".$fila['total_enfermedad']. " ". " - ";
-							$salida.="id_enfermedad -> ".$fila['id_enfermedad']. " ". " - ";
-							$salida.="id_sintoma -> ".$fila['id_sintoma']. " ". " <br> ";
-							//$salida.=$fila['sintoma_conteo']. " ". " <br> ";
-							//$salida.=$fila['conteo'] . " <br><br> "	;
-								
-														//$salida.= $fila['enfermedad']. "<br><br>";
+							if ($fila['conteo_sintomas'] >= $conteo) {
+								$conteo= $fila['conteo_sintomas'];
+								$salida .="<center>". $this->colocar_imagen($fila['url'] , '50%' ) . "</center>";
+								$salida .="<b>Enfermedad : " .  $fila['enfermedad'] . "</b><br>";
+								$salida .="La cantidad de seleccionados en esta enfermedad: ". $fila['conteo_sintomas'] . "<br>";
+								$salida .="La cantidad total de sintomas de esta enfermedad : ". $fila['conteo_total']. "<br>";
+								if ($fila['conteo_sintomas']==$fila['conteo_total']) {
+									$salida.= "<b>Esta es la enfermedad que tiene su mascota ya que posee todos los sintomas de esta enfermedad</b> <br>";
+								}else{
+									$salida.= "<b>Esta puede ser una de las enfermedades que tiene su mascota, ya que posee ".$fila['conteo_sintomas']. " sintomas de " .$fila['conteo_total']." sintomas </b> <br>";
+								}
+								$salida.="<br>";
+							}
 						}
+							$salida.= "<br>Esta son las enfermedades que mas se acercan a los sintomas que tiene su mascota";
 				}else{
 					$salida.="No se encontro ningún resultado";
 				}
-					
-						//$num = mysqli_num_rows($result);
-						//echo  $num[0];
+				
 			return $salida;
-
-
-			
-				/*}else{
-					return "No hay una enfermedad ni una reseta definida por estos sintomas";
-				}*/
 
 		}
 	}
