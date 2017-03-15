@@ -2,30 +2,80 @@
 include 'Operaciones.php';
 $mi_obj = New Operaciones; ?>
 <!DOCTYPE html>
-<html>
+<html ng-app="App">
 <head>
-	<script type="text/javascript" src="listas01.js">
-		alert('hola');
-	</script>
+	<script src="js/angular.min.js"></script>
+	<script type="text/javascript" src="js/funcion.js">	</script>
+	<link rel="stylesheet" type="text/css" href="css/estilo.css">
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<title>
 		Mi veterinaria
 	</title>
 </head>
-<body>
-	<form action="" method="POST">   
-		Sintomas: <br>   
-		<?php echo $mi_obj->leer_campo('tb_sintomas'); ?>
-		<input type="hidden" name="sintoma" id="contenedor-salida">
-		<input type="submit" value="Enviar datos!" > 
-	</form>
-	 <div id="contenedor-salida"></div>
-	 <?php 
-	 if ($_POST) 
-	 {
-		//echo $_POST['sintoma'];
-		echo "<br>".$mi_obj->calcular_enfermedad($_POST['sintomas'],$_POST['sintoma']);
-	 }
-	?>
-	<a href="ir">ir</a>
+<body id="todo">
+	<div class="container" >
+	<header >
+			<div class="row">
+				<div class="col-xs-12 col-md-3"></div>
+				<div class="col-xs-12 col-md-2">
+					<center><img width="100%"  src="img/tite.png"></center>
+				</div>
+				<div class="col-xs-12 col-md-1"><div id="line">|</div></div>
+				<div class="col-xs-12 col-md-3">
+						<h5><b>Mi Veterinaria </b> <br>
+						San Jose del Guaviare <br>
+						Edwar Esteban Cruz Hermandez <br>
+						2017</h5>
+				</div>
+				<div class="col-xs-12 col-md-3"></div>
+			</div>
+			<div id="encabezado"></div>
+		</header>
+
+		<div class="row">
+			
+			<div ng-controller="App-Ctrl">
+				<div class="col-xs-12 col-md-4">
+					
+					<main class="well">	
+						<center><h2><ol><b>Sintomas</b></ol></h2></center>
+
+								<?php echo $mi_obj->leer_campo('tb_sintomas'); ?>
+								<input type="hidden" ng-model="sintoma" name="sintoma" id="contenedor-salida">
+								
+					</main>	
+								</div>
+
+					<div class="col-xs-12 col-md-8">	
+						<div class="row well"></div>
+
+						<aside>
+							<div ng-repeat="x in campos">
+								<div class="row">
+									
+									<div class="col-xs-12 col-md-4">
+										<center><img width="60%" src="{{ x.Img }}"></center>
+									</div>
+
+									<div class="col-xs-12 col-md-8">
+						           		<br><b>Enfermedad: {{ x.Enfermedad }}</b> <br>
+						            	La cantidad de sintomas seleccionados en esta enfermedad son : {{ x.Conteo_S }}<br>
+						            	La cantidad de sintomas total en esta enfermedad son : {{ x.Conteo_T }}		
+						            	<br> <b style="color:#1ABC9C"> {{ x.Enfermedad_igual}}</b>
+									</div>
+
+						        </div>
+					    	</div> 
+						</aside>	
+
+					</div>
+				</div>	
+
+			</div>
+
+
+	</div>
+	<script type="text/javascript" src="js/angular.js">	</script>
+	
 </body>
 </html>
