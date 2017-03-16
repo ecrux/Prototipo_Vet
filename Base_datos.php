@@ -17,7 +17,7 @@
 
 
 		/**
-		* Este método me eprmite establecer ua conexión a la base de datos.
+		* Este método me permite establecer ua conexión a la base de datos.
 		* Publica en el atributo conexion la conexión.
 		*/
 		function Base_datos(){
@@ -41,7 +41,7 @@
 		}
 
 		/**
-		*Esta es una consulta la cual se puede tener la condición nula y retorna un resultado.
+		*Esta función es una consulta a la base de datos la cual se puede tener la condición nula y retorna una variable resultado sin imprimir nada.
 		* @param 	text 	Esta sera la tabla a selecionar de mi bd 
 		* @param 	text 	Este parametro sera los campos a traer
 		* @param 	text 	Esta sera la condición si no se nesecita puede ser null
