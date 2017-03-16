@@ -42,7 +42,10 @@
 
 		/**
 		*Esta es una consulta la cual se puede tener la condición nula y retorna un resultado.
-		* @param 	text 	Agrem
+		* @param 	text 	Esta sera la tabla a selecionar de mi bd 
+		* @param 	text 	Este parametro sera los campos a traer
+		* @param 	text 	Esta sera la condición si no se nesecita puede ser null
+		* @return 	text 	Retornara la variable resultado para despues tomarla y usarla com ose quiera 
 		*/
 		function consultar_tabla($tabla, $campos, $condicion=null)
 		{
@@ -53,19 +56,29 @@
 			return $resultado;
 		}
 
+		/**
+		* Esta es una verificación de una herencia.
+		* @return 	text 	Retornara un mensaje de verificación.
+		*/
 		function imprimir_mensaje()
 		{
 			return "Esta funcionando la heriencia";
 		}
 
 
+
+		/**
+		* Esta es una funcion que me imprime una lista desplegable con conexion a bd.
+		* @param 	text 	Esta sera la tabla a selecionar de mi bd 
+		* @return 	text 	Retornara un select dibujado con todos los registros de la tabla naterior
+		*/
 		function leer_campo($tabla)
 		{
 			$salida="";
 			$sql="SELECT * FROM $tabla";
 			$resultado= ($this->conexion) -> query($sql);
 			if (mysqli_num_rows($resultado)>0) {
-				$salida.="<SELECT id='select' name='sintomas[] ' MULTIPLE='multiple' size='25' onclick='al_dar_clic_en_listaa()' class='form-control'>";
+				$salida.="<SELECT id='select' name='sintomas[] ' MULTIPLE='multiple' size='25' ng-model='id_sintomas' ng-change='verificar();' class='form-control'>";
 					$i=0;
 					while ($fila=mysqli_fetch_array($resultado)) 
 					{
@@ -80,6 +93,14 @@
 			return $salida;
 		}
 
+
+
+
+		/**
+		* Esta es una super función que hace la relación de las tablas de este proyecto y me arroja nuevos campos
+		* @param 	text 	Solo ingresa esta variable de condición la cual es los sintomas asociados
+		* @return 	text 	Retornara las enfermedades con sus imagenes, sintomas y conteos.
+		*/
 		function calcular_enfermedad($sintoma)
 		{
 			$salida="";
