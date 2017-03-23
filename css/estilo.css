@@ -14,3 +14,11 @@
 #line{
 	font-size: 60px;
 }
+#ayuda
+{
+	width: 100%;
+}
+#ayuda:hover
+{
+	width: 110%;
+}
