@@ -3,7 +3,7 @@
 * Fecha : 01/03/2017
 * Este es mi archivo angula aqui tendre mi funciones angular para aplicarlas a mi proyecto 
 */
-
+console.log('Funcionando angular.js');
 var acumuladorApp = angular.module( 'App', [] );
         
         acumuladorApp.controller( "App-Ctrl",
@@ -62,6 +62,22 @@ var acumuladorApp = angular.module( 'App', [] );
                                 ); */  
                             }                    
                                
+                    }
+
+                    $scope.buscar = function (a)
+                    {
+                        var busqueda = $scope.text_busqueda;
+                        console.log(busqueda);
+
+                        //Aquí se hace el llamado a un php con conexión a MySQL.
+                               $http.get("traer_resultados.php?busqueda=" + busqueda )
+                               .then(function (response) {$scope.campos = response.data.records;}
+                                );
+                    }
+
+                    $scope.mostrar_imagen = function (a)
+                    {
+                        console.log('Funcionando Buscador')
                     }
 
                 }
