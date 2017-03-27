@@ -18,7 +18,7 @@ $mi_obj = New Operaciones; ?>
 			<div class="row">
 				<div class="col-xs-12 col-md-3"></div>
 				<div class="col-xs-12 col-md-2">
-					<center><img width="100%"  src="img/tite.png"></center>
+					<a href="index.php"><center><img width="100%"  src="img/tite.png"></center></a>
 				</div>
 				<div class="col-xs-12 col-md-1"><div id="line">|</div></div>
 				<div class="col-xs-12 col-md-3">
@@ -27,7 +27,10 @@ $mi_obj = New Operaciones; ?>
 						Edwar Esteban Cruz Hermandez <br>
 						2017</h5>
 				</div>
-				<div class="col-xs-12 col-md-3"></div>
+				<div class="col-xs-12 col-md-2"></div>
+				<div class="col-xs-12 col-md-1" style="text-align: button;">
+					<a href="ayuda.php"><img id="ayuda" alt="Ayuda" src="img/ayuda.png"></a>
+				</div>
 			</div>
 			<div id="encabezado"></div>
 		</header>
@@ -47,7 +50,9 @@ $mi_obj = New Operaciones; ?>
 								</div>
 
 					<div class="col-xs-12 col-md-8">	
-						<div class="row well"></div>
+						<div class="row well">
+							
+						</div>
 
 						<aside>
 							<div ng-repeat="x in campos">
