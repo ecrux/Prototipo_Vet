@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.6.6
--- https://www.phpmyadmin.net/
+-- version 4.5.1
+-- http://www.phpmyadmin.net
 --
--- Host: localhost:3306
--- Generation Time: Mar 15, 2017 at 03:27 PM
--- Server version: 10.1.20-MariaDB
--- PHP Version: 7.0.8
+-- Servidor: 127.0.0.1
+-- Tiempo de generación: 27-03-2017 a las 15:55:55
+-- Versión del servidor: 10.1.16-MariaDB
+-- Versión de PHP: 7.0.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,13 +17,36 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `id1014973_bd_proyecto`
+-- Base de datos: `bd_proyecto`
 --
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_enfermedades`
+-- Estructura de tabla para la tabla `tb_ayuda`
+--
+
+CREATE TABLE `tb_ayuda` (
+  `id_ayuda` int(11) NOT NULL,
+  `ayuda` varchar(100) NOT NULL,
+  `texto` text NOT NULL,
+  `url` varchar(100) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `tb_ayuda`
+--
+
+INSERT INTO `tb_ayuda` (`id_ayuda`, `ayuda`, `texto`, `url`) VALUES
+(1, 'Casos de uso', 'Un caso de uso es una descripción de los pasos o las actividades que deberán realizarse para llevar a cabo algún proceso.', 'img/caso.png'),
+(2, 'Caso de uso documentado', 'La plantilla siguiente es una muestra de una fuente estándar del sector y puede utilizarse para documentar casos de uso.', 'img/documentacion.png'),
+(3, 'Modelo entidad relación (MER)', 'Es una herramienta para el modelado de datos que permite representar las entidades relevantes de un sistema de información así como sus interrelaciones y propiedades.', 'img/mer.png'),
+(4, 'UML - Clases', 'En la ingeniería de software , un diagrama de clases en el Lenguaje de Modelado Unificado (UML) es un tipo de diagrama de estructura estática que describe la estructura de un sistema mostrando del sistema de clases , sus atributos, operaciones (o métodos), y las relaciones entre los objetos.', 'img/clases.png');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tb_enfermedades`
 --
 
 CREATE TABLE `tb_enfermedades` (
@@ -33,7 +56,7 @@ CREATE TABLE `tb_enfermedades` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tb_enfermedades`
+-- Volcado de datos para la tabla `tb_enfermedades`
 --
 
 INSERT INTO `tb_enfermedades` (`id_enfermedad`, `enfermedad`, `url`) VALUES
@@ -46,7 +69,7 @@ INSERT INTO `tb_enfermedades` (`id_enfermedad`, `enfermedad`, `url`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_relacion`
+-- Estructura de tabla para la tabla `tb_relacion`
 --
 
 CREATE TABLE `tb_relacion` (
@@ -56,7 +79,7 @@ CREATE TABLE `tb_relacion` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tb_relacion`
+-- Volcado de datos para la tabla `tb_relacion`
 --
 
 INSERT INTO `tb_relacion` (`id_relacion`, `id_enfermedad`, `id_sintoma`) VALUES
@@ -82,7 +105,7 @@ INSERT INTO `tb_relacion` (`id_relacion`, `id_enfermedad`, `id_sintoma`) VALUES
 -- --------------------------------------------------------
 
 --
--- Table structure for table `tb_sintomas`
+-- Estructura de tabla para la tabla `tb_sintomas`
 --
 
 CREATE TABLE `tb_sintomas` (
@@ -91,7 +114,7 @@ CREATE TABLE `tb_sintomas` (
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Dumping data for table `tb_sintomas`
+-- Volcado de datos para la tabla `tb_sintomas`
 --
 
 INSERT INTO `tb_sintomas` (`id_sintoma`, `sintomas`) VALUES
@@ -109,18 +132,38 @@ INSERT INTO `tb_sintomas` (`id_sintoma`, `sintomas`) VALUES
 (12, 'Pan'),
 (13, 'Lechuga');
 
+-- --------------------------------------------------------
+
 --
--- Indexes for dumped tables
+-- Estructura de tabla para la tabla `tb_usuario`
+--
+
+CREATE TABLE `tb_usuario` (
+  `documento` varchar(100) NOT NULL,
+  `nombre` varchar(100) NOT NULL,
+  `id_relacion` int(11) NOT NULL,
+  `id_ayuda` int(11) NOT NULL,
+  `fecha_registro` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Índices para tablas volcadas
 --
 
 --
--- Indexes for table `tb_enfermedades`
+-- Indices de la tabla `tb_ayuda`
+--
+ALTER TABLE `tb_ayuda`
+  ADD PRIMARY KEY (`id_ayuda`);
+
+--
+-- Indices de la tabla `tb_enfermedades`
 --
 ALTER TABLE `tb_enfermedades`
   ADD PRIMARY KEY (`id_enfermedad`);
 
 --
--- Indexes for table `tb_relacion`
+-- Indices de la tabla `tb_relacion`
 --
 ALTER TABLE `tb_relacion`
   ADD PRIMARY KEY (`id_relacion`),
@@ -128,40 +171,60 @@ ALTER TABLE `tb_relacion`
   ADD KEY `id_sintoma` (`id_sintoma`);
 
 --
--- Indexes for table `tb_sintomas`
+-- Indices de la tabla `tb_sintomas`
 --
 ALTER TABLE `tb_sintomas`
   ADD PRIMARY KEY (`id_sintoma`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- Indices de la tabla `tb_usuario`
+--
+ALTER TABLE `tb_usuario`
+  ADD PRIMARY KEY (`documento`),
+  ADD KEY `id_ayuda` (`id_ayuda`),
+  ADD KEY `id_relacion` (`id_relacion`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
 --
 
 --
--- AUTO_INCREMENT for table `tb_enfermedades`
+-- AUTO_INCREMENT de la tabla `tb_ayuda`
+--
+ALTER TABLE `tb_ayuda`
+  MODIFY `id_ayuda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+--
+-- AUTO_INCREMENT de la tabla `tb_enfermedades`
 --
 ALTER TABLE `tb_enfermedades`
   MODIFY `id_enfermedad` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 --
--- AUTO_INCREMENT for table `tb_relacion`
+-- AUTO_INCREMENT de la tabla `tb_relacion`
 --
 ALTER TABLE `tb_relacion`
   MODIFY `id_relacion` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 --
--- AUTO_INCREMENT for table `tb_sintomas`
+-- AUTO_INCREMENT de la tabla `tb_sintomas`
 --
 ALTER TABLE `tb_sintomas`
   MODIFY `id_sintoma` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 --
--- Constraints for dumped tables
+-- Restricciones para tablas volcadas
 --
 
 --
--- Constraints for table `tb_relacion`
+-- Filtros para la tabla `tb_relacion`
 --
 ALTER TABLE `tb_relacion`
   ADD CONSTRAINT `tb_relacion_ibfk_2` FOREIGN KEY (`id_sintoma`) REFERENCES `tb_sintomas` (`id_sintoma`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `tb_relacion_ibfk_3` FOREIGN KEY (`id_enfermedad`) REFERENCES `tb_enfermedades` (`id_enfermedad`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Filtros para la tabla `tb_usuario`
+--
+ALTER TABLE `tb_usuario`
+  ADD CONSTRAINT `tb_usuario_ibfk_1` FOREIGN KEY (`id_relacion`) REFERENCES `tb_relacion` (`id_relacion`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `tb_usuario_ibfk_2` FOREIGN KEY (`id_ayuda`) REFERENCES `tb_ayuda` (`id_ayuda`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
