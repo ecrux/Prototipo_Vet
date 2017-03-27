@@ -56,7 +56,52 @@
         
         echo($outp);
     
-    }//Fin de mi condición ---END!!
+    }/*Fin de mi condición ---END!!
+    Edwar Cruz*/
+    else if (isset($_GET['busqueda'])) {
+    	/*Esta conexión se realiza para la prueba con angularjs*/
+        header("Access-Control-Allow-Origin: *");
+        header("Content-Type: application/json; charset=UTF-8");
+        include 'config.php';
+        $conn = new mysqli( $servidor, $usuario, $password, $bd );
+        $buscar = $_GET['busqueda'];
+        //echo $buscar.length
+		
+		$buscar = (explode(',',$buscar));
+		//echo $buscar[0];*/
 
+		
+        //Se busca principalmente por alias.
+       	$outp="";
+			$sql = " SELECT * FROM tb_ayuda WHERE ";
+			for ($i=0; $i < count($buscar) ; $i++) { 
+				$sql.= " ayuda LIKE '%".$buscar[$i] ."%'  ";
+				$sql.= " or texto LIKE '%".$buscar[$i] ."%'";
+				if ($i < (count($buscar)-1) ) $sql .= " or ";
+			}
+        //echo $sql;
+        //LA tabla que se cree debe tener la tabla aquí requerida, y los campos requeridos abajo.
+        $result = $conn->query( $sql );
+        
+        $outp = "";
+
+	        while ($rs = mysqli_fetch_assoc($result))
+	        {
+				
+					//$conteo= $rs['conteo_sintomas'];
+	            	//Mucho cuidado con esta sintaxis, hay una gran probabilidad de fallo con cualquier elemento que falte.
+		            if ($outp != "") {$outp .= ",";}
+		            $outp .= '{"Img":"' . $rs['url']  . '",';
+		            $outp .= '"Id":"'.utf8_encode($rs["id_ayuda"]).'",';            // <-- La tabla MySQL debe tener este campo.
+		            $outp .= '"Nombre":"'.utf8_encode($rs["ayuda"]).'",';            // <-- La tabla MySQL debe tener este campo.
+		            $outp .= '"Texto":"'.utf8_encode($rs["texto"]).'"}';         // <-- La tabla MySQL debe tener este campo.
+
+	        }
+        
+        $outp ='{"records":['.$outp.']}';
+        $conn->close();
+        
+        echo($outp);
+    }
 
 ?> 
