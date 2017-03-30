@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-03-2017 a las 15:55:55
+-- Tiempo de generación: 30-03-2017 a las 18:48:32
 -- Versión del servidor: 10.1.16-MariaDB
 -- Versión de PHP: 7.0.9
 
@@ -41,7 +41,9 @@ INSERT INTO `tb_ayuda` (`id_ayuda`, `ayuda`, `texto`, `url`) VALUES
 (1, 'Casos de uso', 'Un caso de uso es una descripción de los pasos o las actividades que deberán realizarse para llevar a cabo algún proceso.', 'img/caso.png'),
 (2, 'Caso de uso documentado', 'La plantilla siguiente es una muestra de una fuente estándar del sector y puede utilizarse para documentar casos de uso.', 'img/documentacion.png'),
 (3, 'Modelo entidad relación (MER)', 'Es una herramienta para el modelado de datos que permite representar las entidades relevantes de un sistema de información así como sus interrelaciones y propiedades.', 'img/mer.png'),
-(4, 'UML - Clases', 'En la ingeniería de software , un diagrama de clases en el Lenguaje de Modelado Unificado (UML) es un tipo de diagrama de estructura estática que describe la estructura de un sistema mostrando del sistema de clases , sus atributos, operaciones (o métodos), y las relaciones entre los objetos.', 'img/clases.png');
+(4, 'UML - Clases', 'En la ingeniería de software , un diagrama de clases en el Lenguaje de Modelado Unificado (UML) es un tipo de diagrama de estructura estática que describe la estructura de un sistema mostrando del sistema de clases , sus atributos, operaciones (o métodos), y las relaciones entre los objetos.', 'img/clases.png'),
+(5, 'Diagramas de componentes', 'Un diagrama de componentes es un diagrama tipo del Lenguaje Unificado de Modelado. Un diagrama de componentes representa cómo un sistema de software es dividido en componentes y muestra las dependencias entre estos componentes.', 'img/componentes.png'),
+(6, 'Diagrama de distribuciones ', 'Como ya hemos comentado, el diagrama de distribución muestra la estructura física de un sistema, las máquinas, los dispositivos, las interconexiones entre dispositivos y las piezas de software que se encontrarán en cada máquina.', 'img/distribuciones.png');
 
 -- --------------------------------------------------------
 
@@ -192,7 +194,7 @@ ALTER TABLE `tb_usuario`
 -- AUTO_INCREMENT de la tabla `tb_ayuda`
 --
 ALTER TABLE `tb_ayuda`
-  MODIFY `id_ayuda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id_ayuda` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `tb_enfermedades`
 --
@@ -229,3 +231,4 @@ ALTER TABLE `tb_usuario`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
