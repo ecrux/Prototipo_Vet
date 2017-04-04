@@ -77,6 +77,7 @@
 			for ($i=0; $i < count($buscar) ; $i++) { 
 				$sql.= " ayuda LIKE '%".$buscar[$i] ."%'  ";
 				$sql.= " or texto LIKE '%".$buscar[$i] ."%'";
+				$sql.= " or palabras_claves LIKE '%".$buscar[$i] ."%'";
 				if ($i < (count($buscar)-1) ) $sql .= " or ";
 			}
         //echo $sql;
